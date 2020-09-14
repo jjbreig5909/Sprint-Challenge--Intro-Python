@@ -77,11 +77,45 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+# usercoords1 = input("Enter lat1, lon1: ").split(',')
+# usercoords2 = input("Enter lat2, lon2: ").split(',')
+# if float(usercoords1[0])<float(usercoords2[0]):
+#   lat1 = float(usercoords1[0])
+#   lat2 = float(usercoords2[0])
+# else:
+#   lat2 = float(usercoords1[0])
+#   lat1 = float(usercoords2[0])
+
+# if float(usercoords1[1])<float(usercoords2[1]):
+#   lon1 = float(usercoords1[1])
+#   lon2 = float(usercoords2[1])
+# else:
+#   lon2 = float(usercoords1[1])
+#   lon1 = float(usercoords2[1])
+
+# print(lat1)
+# print(lat2)
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  minlat = min(lat1, lat2)
+  maxlat = max(lat1, lat2)
+  minlon = min(lon1, lon2)
+  maxlon = max(lon1, lon2)
+  with open('src\cityreader\cities.csv') as cityfile:
+    citydata = csv.reader(cityfile, delimiter = ',')
+    next(citydata)
+    print(lat1)
+    for row in citydata:
+      name = row[0]
+      lat = float(row[3])
+      lon = float(row[4])
+      if lat >= minlat and lat <= maxlat and lon >= minlon and lon <= maxlon:
+        within.append(City(name, lat, lon))
   
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
   return within
+
